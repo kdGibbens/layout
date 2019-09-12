@@ -1,4 +1,4 @@
-# rexel platt
+#layout example
 
 ## Project setup
 
