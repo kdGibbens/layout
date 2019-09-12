@@ -1,28 +1,43 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <div class="loader" v-if="$store.state.loading">Loading...</div>
+    <div v-else class="footer-container">
+      <Header />
+      <Categories />
+      <MainContent />
+      <Footer />
+    </div>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import store from "./store/store";
+import Header from "./components/Header";
+import Categories from "./components/Categories";
+import MainContent from "./components/MainContent";
+import Footer from "./components/Footer";
 
 export default {
-  name: 'app',
+  name: "app",
+  store,
   components: {
-    HelloWorld
+    Header,
+    Categories,
+    MainContent,
+    Footer
+  },
+  created: function() {
+    this.getStarwars("https://swapi.co/api/starships");
+  },
+  methods: {
+    getStarwars(url) {
+      let arr = [];
+      store.dispatch("searchSuggestions", { url, arr });
+    }
   }
-}
+};
 </script>
 
 <style lang="scss">
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+@import "./assets/styles/scss/app.scss";
 </style>
